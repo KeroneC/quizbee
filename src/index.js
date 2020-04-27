@@ -7,6 +7,7 @@ import Result from "./components/Result";
 import Start from "./components/Start";
 import Advance from "./components/Advance";
 import Level2 from "./components/Level2";
+import Level3 from "./components/Level3";
 import Title from "./components/Title";
 import Fail from "./components/Fail";
 
@@ -66,6 +67,7 @@ class QuizBee extends Component {
 
         this.setState({
             score: 0,
+
             responses: 0,
             level: this.state.level + 1
         })
@@ -94,7 +96,8 @@ class QuizBee extends Component {
                
 
                 {this.state.start === 0 && this.state.level === 0 && this.state.timeleft >= 0 ? (<Start playAgain={this.playAgain} />) : null }
-                {this.state.start === 1 && this.state.level === 1 && this.state.timeleft >= 0 ? (<Level2 nextStage={this.nextStage} />) : null }
+                {this.state.start === 1 && this.state.level === 1 && this.state.timeleft >= 0 ? (<Level2  nextStage={this.nextStage}/>) : null }
+                {this.state.start === 1 && this.state.level === 2 && this.state.timeleft >= 0 ? (<Level3  />) : null }
                 
                 {this.state.questionBank.length > 0 
                 && this.state.responses < 5 
@@ -119,6 +122,7 @@ class QuizBee extends Component {
 
                 {this.state.responses === 5 && this.state.score < 5 && this.state.timeleft >= 0  ? (<Result score={this.state.score} playAgain={this.playAgain} />) : null }
                 {this.state.responses === 5 && this.state.score === 5 && this.state.timeleft >= 0  ? (<Advance score={this.state.score} nextStage={this.nextStage} />) : null }
+                
                 {this.state.timeleft <= 0 ? (<Fail timeUp={this.timeUp} />):null}
             </div>
         );

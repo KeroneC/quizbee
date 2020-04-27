@@ -78,6 +78,7 @@
   font-size: 3em;
   top: 250px;
   text-align: center;
+  color: black !important;
 }
 
 .instructions {
@@ -121,3 +122,6 @@
   cursor: pointer;
 }
 
+.pclass {
+  color: black !important;
+}
