@@ -21,7 +21,8 @@ class QuizBee extends Component {
         responses: 0,
         start: 0,
         level: 0,
-        timeleft: 300
+        timeleft: 300,
+        win: 0
         
     }; 
 

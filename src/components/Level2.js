@@ -15,7 +15,7 @@ class Level2 extends React.Component {
 
   handleSubmit(event) {
     if (this.state.value === "social engineering") {
-      alert("Answer was correct, Final stage lets");
+      alert("Answer was correct, Final stage lets GO!");
       this.props.nextStage();
       event.preventDefault();
     } else {
