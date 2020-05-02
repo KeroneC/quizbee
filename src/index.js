@@ -10,6 +10,7 @@ import Level2 from "./components/Level2";
 import Level3 from "./components/Level3";
 import Title from "./components/Title";
 import Fail from "./components/Fail";
+import Finish from "./components/Finish"
 
 
 
@@ -69,7 +70,9 @@ class QuizBee extends Component {
             responses: 0,
             start: 0,
             level: 0,
-            timeleft: 300
+            timeleft: 300,
+            win: 0
+
         })
     }
 
@@ -88,7 +91,7 @@ class QuizBee extends Component {
         
 
         this.myinterval = setInterval(() => {
-      if (this.state.timeleft >= 0 && this.state.start === 1) {
+      if (this.state.timeleft >= 0 && this.state.start === 1 && this.state.win === 0) {
         this.setState((prevState) => ({
           timeleft: prevState.timeleft - 1,
         }));
@@ -106,15 +109,17 @@ class QuizBee extends Component {
                 <Title status={this.state.start} timeUp={this.timeUp} />
                
 
-                {this.state.start === 0 && this.state.level === 0 && this.state.timeleft >= 0 ? (<Start playAgain={this.playAgain} />) : null }
-                {this.state.start === 1 && this.state.level === 1 && this.state.timeleft >= 0 ? (<Level2  nextStage={this.nextStage}/>) : null }
-                {this.state.start === 1 && this.state.level === 2 && this.state.timeleft >= 0 ? (<Level3  playAgain={this.playAgain} win={this.win}/>) : null }
+                {this.state.start === 0 && this.state.level === 0 && this.state.timeleft >= 0 && this.state.win === 0 ? (<Start playAgain={this.playAgain} />) : null }
+                {this.state.start === 1 && this.state.level === 1 && this.state.timeleft >= 0 && this.state.win === 0 ? (<Level2  nextStage={this.nextStage}/>) : null }
+                {this.state.start === 1 && this.state.level === 2 && this.state.timeleft >= 0 && this.state.win === 0 ? (<Level3  playAgain={this.playAgain} win={this.win}/>) : null }
+                {this.state.win === 1 ? (<Finish timeUp={this.timeUp} />) : null }
                 
                 {this.state.questionBank.length > 0 
                 && this.state.responses < 5 
                 && this.state.timeleft > 0 
                 && this.state.start !== 0
                 && this.state.level === 0
+                && this.state.win === 0
                 && this.state.questionBank.map(({question, answers, correct, questionId}) => (
                     
                     <QuestionBox 
@@ -131,10 +136,10 @@ class QuizBee extends Component {
                 
                 )}
 
-                {this.state.responses === 5 && this.state.score < 5 && this.state.timeleft >= 0  ? (<Result score={this.state.score} playAgain={this.playAgain} />) : null }
-                {this.state.responses === 5 && this.state.score === 5 && this.state.timeleft >= 0  ? (<Advance score={this.state.score} nextStage={this.nextStage} />) : null }
+                {this.state.responses === 5 && this.state.score < 5 && this.state.timeleft >= 0 && this.state.win === 0 ? (<Result score={this.state.score} playAgain={this.playAgain} />) : null }
+                {this.state.responses === 5 && this.state.score === 5 && this.state.timeleft >= 0 && this.state.win === 0 ? (<Advance score={this.state.score} nextStage={this.nextStage} />) : null }
                 
-                {this.state.timeleft <= 0 ? (<Fail timeUp={this.timeUp} />):null}
+                {this.state.timeleft <= 0 ? (<Fail timeUp={this.timeUp} />) : null}
             </div>
         );
     }

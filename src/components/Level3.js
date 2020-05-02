@@ -7,10 +7,12 @@ class Level3 extends React.Component {
     this.state = {
       items: [],
       isloaded: false,
+      start: 0
     };
 
     this.handleTrue = this.handleTrue.bind(this);
     this.handleFalse = this.handleFalse.bind(this);
+    this.handleStart = this.handleStart.bind(this)
   }
 
   componentDidMount() {
@@ -18,34 +20,52 @@ class Level3 extends React.Component {
       this.setState({
         isloaded: true,
         items: items,
+        
       });
     });
   }
 
-  handleTrue() {
+  handleTrue(event) {
 
     if(this.state.items[0].answer === "T"){
+
     alert("Answer Correct")
+    this.props.win()
+    event.preventDefault();
+
   } else {
+
     alert("AWWW, so close")
-  }
+    this.props.playAgain()
+    event.preventDefault();
 
   }
 
-  handleFalse() {
+  }
+
+  handleFalse(event) {
    
   if(this.state.items[0].answer === "F"){
     alert("Answer Correct! You win!")
+    this.props.win();
+    event.preventDefault();
   } else {
     alert("AWWW, so close")
+    this.props.playAgain();
+    event.preventDefault();
   }
 
+  }
+
+  handleStart(event){
+    this.setState({start: 1 });
   }
 
   render() {
-    var { isloaded, items } = this.state;
+    var items = this.state.items;
+    var start = this.state.start;
 
-    if (isloaded) {
+    if (start > 0) {
       return (
         <div className="level2">
           <br />
@@ -78,14 +98,13 @@ class Level3 extends React.Component {
       return (
         <div className="level2">
           <br />
-          <p className="pclass">Loading...</p>
-          <button type="button" className="btn btn-danger">
-            True
+          <p className="pclass">The next question is True or false. Answer correctly you win, answer incorrectly you are sent back to level 1. </p>
+          
+          <button type="button" className="btn btn-danger" onClick={this.handleStart}>
+            Lets finish this
           </button>
-          &nbsp;&nbsp;
-          <button type="button" className="btn btn-danger">
-            False
-          </button>
+          
+          
         </div>
       );
     }
