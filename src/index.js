@@ -13,6 +13,7 @@ import Fail from "./components/Fail";
 
 
 
+
 class QuizBee extends Component {
 
     state = {
@@ -34,6 +35,12 @@ class QuizBee extends Component {
         });
     };
 
+    win = () => {
+        this.setState({
+            win: 1
+        })
+    }
+
     computeAnswer = (answer, correctAnswer) => {
         if (answer === correctAnswer){
             this.setState({
@@ -50,7 +57,9 @@ class QuizBee extends Component {
         this.setState({
             score: 0,
             responses: 0,
-            start: 1
+            start: 1,
+            level: 0
+
         })
     }
 
@@ -74,8 +83,9 @@ class QuizBee extends Component {
         })
     }
 
-    componentDidMount(){ //get data from API
-        this.getQuestions();
+    componentDidMount(){ 
+        this.getQuestions();//get data from API
+        
 
         this.myinterval = setInterval(() => {
       if (this.state.timeleft >= 0 && this.state.start === 1) {
@@ -98,7 +108,7 @@ class QuizBee extends Component {
 
                 {this.state.start === 0 && this.state.level === 0 && this.state.timeleft >= 0 ? (<Start playAgain={this.playAgain} />) : null }
                 {this.state.start === 1 && this.state.level === 1 && this.state.timeleft >= 0 ? (<Level2  nextStage={this.nextStage}/>) : null }
-                {this.state.start === 1 && this.state.level === 2 && this.state.timeleft >= 0 ? (<Level3  />) : null }
+                {this.state.start === 1 && this.state.level === 2 && this.state.timeleft >= 0 ? (<Level3  playAgain={this.playAgain} win={this.win}/>) : null }
                 
                 {this.state.questionBank.length > 0 
                 && this.state.responses < 5 
